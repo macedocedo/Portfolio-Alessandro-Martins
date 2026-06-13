@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alessandro Martins | Psicólogo</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sage: #4A6741;
+    --sage-dark: #3A5232;
+    --sage-light: #8FAF8A;
+    --sage-pale: #C8D9C5;
+    --beige: #F2EDE6;
+    --beige-dark: #E5DDD4;
+    --text-dark: #1E2B1C;
+    --text-mid: #4A5548;
+    --text-light: #7A8778;
+    --white: #FAFAF8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--beige);
+    color: var(--text-dark);
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 5vw;
+    background: rgba(242,237,230,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--beige-dark);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem; font-weight: 500; letter-spacing: 0.12em;
+    color: var(--sage-dark); text-transform: uppercase; text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--text-mid); text-decoration: none; transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--sage); }
+  .nav-cta {
+    background: var(--sage); color: var(--white);
+    padding: 0.55rem 1.4rem; border-radius: 2px;
+    font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase;
+    text-decoration: none; transition: background 0.3s;
+  }
+  .nav-cta:hover { background: var(--sage-dark); }
+
+  /* ── HERO ── */
+  #inicio {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 72px; /* altura exata da nav */
+  }
+  .hero-text {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 6vw 5vw 6vw 8vw;
+  }
+  .hero-eyebrow {
+    font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--sage-light); margin-bottom: 1.8rem;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.4rem, 4vw, 3.6rem);
+    font-weight: 300; line-height: 1.2;
+    color: var(--text-dark); margin-bottom: 1.6rem;
+  }
+  .hero-title em { font-style: italic; color: var(--sage); }
+  .hero-subtitle {
+    font-size: 0.92rem; color: var(--text-mid); max-width: 420px;
+    margin-bottom: 2.8rem; line-height: 1.8;
+  }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  /* ── HERO IMAGE ── */
+  /*
+    fotoperfil.jpeg: 1254×1254px (quadrada)
+    Rosto ocupa o lado esquerdo (~45% da largura), centralizado verticalmente.
+    Estratégia: exibir como coluna full-height, cortar à esquerda para focar no rosto.
+  */
+  .hero-image-outer {
+    position: relative;
+    min-height: calc(100vh - 72px);
+    background: var(--beige);
+    display: flex;
+    align-items: stretch;
+    /* padding cria espaço para a moldura decorativa aparecer */
+    padding: 2.2rem 2.2rem 2.2rem 1.2rem;
+  }
+  /* Moldura offset atrás da foto */
+  .hero-image-outer::before {
+    content: '';
+    position: absolute;
+    top: 1rem; left: 0.5rem;
+    right: 3.5rem; bottom: 3.5rem;
+    border: 2px solid var(--sage-pale);
+    z-index: 0;
+    pointer-events: none;
+  }
+  .hero-image-wrap {
+    position: relative;
+    overflow: hidden;
+    background: var(--sage-pale);
+    flex: 1;
+    border-radius: 16px;
+    box-shadow:
+      0 4px 18px rgba(58, 82, 50, 0.20),
+      0 16px 48px rgba(58, 82, 50, 0.13);
+    z-index: 1;
+  }
+  .hero-image-wrap img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 20% 25%;
+    display: block;
+    filter: brightness(0.98) contrast(1.02) saturate(0.97);
+  }
+  .hero-badge {
+    position: absolute; bottom: 1.8rem; left: 33rem;
+    background: var(--white); padding: 1rem 1.4rem;
+    border-radius: 8px;
+    border-left: 3px solid var(--sage);
+    z-index: 2;
+    box-shadow: 0 2px 14px rgba(30,43,28,0.14);
+  }
+  .hero-badge p:first-child {
+    font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--text-light);
+  }
+  .hero-badge p:last-child {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; color: var(--sage-dark);
+  }
+
+  /* ── BUTTONS ── */
+  .btn-primary {
+    background: var(--sage); color: var(--white);
+    padding: 0.85rem 2rem; border-radius: 2px;
+    font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase;
+    text-decoration: none; transition: background 0.3s;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+  }
+  .btn-primary:hover { background: var(--sage-dark); }
+  .btn-secondary {
+    border: 1px solid var(--sage); color: var(--sage);
+    padding: 0.85rem 2rem; border-radius: 2px;
+    font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase;
+    text-decoration: none; transition: all 0.3s;
+  }
+  .btn-secondary:hover { background: var(--sage); color: var(--white); }
+
+  /* ── SECTIONS COMUM ── */
+  section { padding: 7rem 8vw; }
+  .section-eyebrow {
+    font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--sage-light); margin-bottom: 0.8rem;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 300;
+    line-height: 1.2; color: var(--text-dark); margin-bottom: 1.4rem;
+  }
+  .section-title em { font-style: italic; color: var(--sage); }
+  .section-intro {
+    font-size: 0.92rem; color: var(--text-mid); max-width: 560px;
+    line-height: 1.9; margin-bottom: 3.5rem;
+  }
+  .divider {
+    width: 40px; height: 1px; background: var(--sage-light);
+    margin: 1.5rem 0 2rem;
+  }
+
+  /* ── MEU TRABALHO ── */
+  #trabalho { background: var(--white); }
+  .areas-intro {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 5vw; align-items: start; margin-bottom: 4rem;
+  }
+  .areas-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 1px; background: var(--beige-dark);
+  }
+  .area-card {
+    background: var(--white); padding: 1.8rem 1.4rem;
+    cursor: pointer; transition: all 0.3s; position: relative; overflow: hidden;
+  }
+  .area-card::before {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+    height: 2px; background: var(--sage); transform: scaleX(0);
+    transition: transform 0.3s;
+  }
+  .area-card:hover::before { transform: scaleX(1); }
+  .area-card:hover { background: var(--beige); }
+  .area-icon { font-size: 1.4rem; margin-bottom: 0.8rem; }
+  .area-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem; font-weight: 500; color: var(--text-dark); margin-bottom: 0.5rem;
+  }
+  .area-desc { font-size: 0.78rem; color: var(--text-light); line-height: 1.6; }
+
+  /* Modal */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 1000;
+    background: rgba(30,43,28,0.6); backdrop-filter: blur(4px);
+    align-items: center; justify-content: center;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal {
+    background: var(--white); max-width: 580px; width: 90%;
+    padding: 3rem; border-left: 4px solid var(--sage); position: relative;
+    max-height: 90vh; overflow-y: auto;
+  }
+  .modal-close {
+    position: absolute; top: 1rem; right: 1.2rem;
+    background: none; border: none; font-size: 1.4rem;
+    cursor: pointer; color: var(--text-light);
+  }
+  .modal-eyebrow { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--sage-light); margin-bottom: 0.6rem; }
+  .modal-title { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: var(--text-dark); margin-bottom: 1rem; }
+  .modal-body { font-size: 0.88rem; color: var(--text-mid); line-height: 1.9; }
+
+  /* ── SOBRE ── */
+  #sobre { background: var(--beige); }
+  .sobre-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 6vw; align-items: start;
+  }
+
+  /* Container da imagem com proporção fixa */
+  .sobre-img-wrap {
+    position: relative;
+    padding: 0 1.5rem 1.5rem 0;
+  }
+  /* Frame decorativo deslocado */
+  .sobre-img-wrap::after {
+    content: '';
+    position: absolute;
+    bottom: 0; right: 0;
+    width: calc(100% - 1rem);
+    height: calc(100% - 1rem);
+    border: 2px solid var(--sage-pale);
+    z-index: 0;
+    pointer-events: none;
+  }
+  /* Barra vertical de acento */
+  .sobre-img-wrap::before {
+    content: '';
+    position: absolute;
+    top: 1.5rem; left: -4px;
+    width: 4px;
+    height: 40%;
+    background: var(--sage);
+    z-index: 2;
+  }
+
+  /*
+    logo.jpeg: 1080×898px (horizontal, proporção ~6:5)
+    É um cartão de visita / identidade visual — NÃO uma foto de perfil.
+    Exibir com proporção original preservada, sem cortar conteúdo importante.
+  */
+  .sobre-img-ratio {
+    position: relative;
+    width: 100%;
+    padding-bottom: 83.1%;
+    overflow: hidden;
+    background: var(--beige-dark);
+    border-radius: 12px;
+    box-shadow:
+      0 6px 20px rgba(58, 82, 50, 0.18),
+      0 20px 50px rgba(58, 82, 50, 0.12);
+    z-index: 1;
+  }
+  .sobre-img-ratio img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center center;
+    display: block;
+    padding: 0.5rem;
+    border-radius: 12px;
+  }
+  .sobre-img-caption {
+    background: var(--sage); color: var(--white);
+    padding: 0.9rem 1.5rem; font-size: 0.75rem; letter-spacing: 0.08em;
+    display: block; width: 100%;
+    position: relative; z-index: 1;
+    border-radius: 0 0 2px 2px;
+  }
+
+  .sobre-text p { font-size: 0.9rem; color: var(--text-mid); margin-bottom: 1.2rem; line-height: 1.9; }
+  .formacoes { margin-top: 2rem; }
+  .formacao-item {
+    display: flex; gap: 1rem; padding: 1rem 0;
+    border-bottom: 1px solid var(--beige-dark);
+  }
+  .formacao-item:last-child { border-bottom: none; }
+  .formacao-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--sage); margin-top: 0.4rem; flex-shrink: 0;
+  }
+  .formacao-content p:first-child { font-size: 0.82rem; font-weight: 500; color: var(--text-dark); }
+  .formacao-content p:last-child { font-size: 0.76rem; color: var(--text-light); }
+  .crp-badge {
+    display: inline-block; margin-top: 1.5rem;
+    background: var(--beige-dark); padding: 0.5rem 1rem;
+    font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--text-mid); border-left: 2px solid var(--sage);
+  }
+
+  /* ── COMO FUNCIONA ── */
+  #como-funciona { background: var(--sage-dark); }
+  #como-funciona .section-eyebrow { color: var(--sage-pale); }
+  #como-funciona .section-title { color: var(--white); }
+  #como-funciona .section-intro { color: rgba(255,255,255,0.65); }
+  .faq-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1px; background: rgba(255,255,255,0.1);
+  }
+  .faq-item {
+    background: var(--sage-dark); padding: 2rem;
+    cursor: pointer; transition: background 0.3s;
+  }
+  .faq-item:hover { background: rgba(255,255,255,0.05); }
+  .faq-q { display: flex; justify-content: space-between; align-items: start; gap: 1rem; }
+  .faq-question {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; color: var(--white); font-weight: 400; margin-bottom: 0.8rem;
+  }
+  .faq-toggle { color: var(--sage-pale); font-size: 1.2rem; flex-shrink: 0; transition: transform 0.3s; }
+  .faq-item.open .faq-toggle { transform: rotate(45deg); }
+  .faq-answer {
+    font-size: 0.85rem; color: rgba(255,255,255,0.6);
+    line-height: 1.85; display: none;
+  }
+  .faq-item.open .faq-answer { display: block; }
+
+  /* ── ABORDAGEM ── */
+  #abordagem { background: var(--white); }
+  .abordagem-grid {
+    display: grid; grid-template-columns: 1.2fr 1fr;
+    gap: 6vw; align-items: start;
+  }
+  .abordagem-pillars {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1.5rem; margin-top: 2rem;
+  }
+  .pillar {
+    padding: 1.5rem; border-top: 2px solid var(--sage);
+    background: var(--beige);
+  }
+  .pillar-label { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--sage-light); margin-bottom: 0.5rem; }
+  .pillar-text { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--text-dark); line-height: 1.5; }
+  .abordagem-quote {
+    background: var(--sage); padding: 3rem 2.5rem; position: relative;
+    margin-top: 2rem;
+  }
+  .abordagem-quote::before {
+    content: '"'; font-family: 'Cormorant Garamond', serif;
+    font-size: 6rem; color: rgba(255,255,255,0.15);
+    position: absolute; top: -1rem; left: 1.5rem; line-height: 1;
+  }
+  .abordagem-quote p {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 1.3rem; color: var(--white); line-height: 1.6; position: relative;
+  }
+  .abordagem-quote cite {
+    display: block; margin-top: 1rem; font-size: 0.72rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--sage-pale); font-style: normal;
+  }
+
+  /* ── FAQ ── */
+  #faq { background: var(--beige); }
+  .faq-list { max-width: 720px; }
+  .faq-list .faq-item {
+    background: var(--white); margin-bottom: 1px;
+    padding: 1.5rem 1.8rem;
+  }
+  .faq-list .faq-item:hover { background: var(--beige-dark); }
+  .faq-list .faq-question { color: var(--text-dark); }
+  .faq-list .faq-toggle { color: var(--sage); }
+  .faq-list .faq-answer { color: var(--text-mid); }
+
+  /* ── CONTATO ── */
+  #contato { background: var(--text-dark); text-align: center; }
+  #contato .section-eyebrow { color: var(--sage-pale); text-align: center; }
+  #contato .section-title { color: var(--white); text-align: center; }
+  .contato-subtitle {
+    font-size: 0.92rem; color: rgba(255,255,255,0.55);
+    max-width: 440px; margin: 0 auto 3rem; line-height: 1.8;
+  }
+  .contato-cta-wrap {
+    display: flex; gap: 1rem; justify-content: center;
+    flex-wrap: wrap; margin-bottom: 4rem;
+  }
+  .contato-info { display: flex; gap: 3rem; justify-content: center; flex-wrap: wrap; }
+  .contato-item { text-align: center; }
+  .contato-item p:first-child {
+    font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--sage-pale); margin-bottom: 0.3rem;
+  }
+  .contato-item a { color: var(--white); text-decoration: none; font-size: 0.9rem; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--text-dark);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 1.5rem 8vw;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 0.5rem;
+  }
+  footer p { font-size: 0.72rem; color: rgba(255,255,255,0.3); letter-spacing: 0.05em; }
+
+  /* ══════════════════════════════════════
+     RESPONSIVE — TABLET (≤ 1024px)
+  ══════════════════════════════════════ */
+  @media (max-width: 1024px) {
+    .areas-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* ══════════════════════════════════════
+     RESPONSIVE — MOBILE (≤ 768px)
+  ══════════════════════════════════════ */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 4vw; }
+    .nav-logo { font-size: 0.88rem; letter-spacing: 0.08em; }
+    .nav-links { display: none; }
+    .nav-cta { padding: 0.5rem 1rem; font-size: 0.72rem; }
+
+    /* Hero: imagem em cima, texto em baixo */
+    #inicio {
+      display: flex;
+      flex-direction: column;
+      padding-top: 90px;
+    }
+    .hero-image-outer {
+      order: -1;
+      width: 100%;
+      min-height: 0;
+      aspect-ratio: 1 / 1;
+      padding: 0 1rem 1rem 1rem;
+      background: transparent;
+    }
+    .hero-image-outer::before {
+      display: none;
+    }
+    .hero-image-wrap {
+      border-radius: 16px;
+      box-shadow:
+        0 4px 14px rgba(58, 82, 50, 0.18),
+        0 10px 28px rgba(58, 82, 50, 0.10);
+    }
+    .hero-image-wrap img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 35% 30%;
+    }
+    .hero-badge {
+      bottom: 1rem;
+      left: 11rem;
+      padding: 0.3rem 1rem;
+      border-radius: 10px;
+    }
+    .hero-badge p:first-child { font-size: 0.62rem; }
+    .hero-badge p:last-child { font-size: 0.95rem; }
+
+    .hero-text {
+      padding: 2.5rem 6vw 3rem;
+      order: 1;
+    }
+    .hero-eyebrow { margin-bottom: 1.2rem; }
+    .hero-subtitle { max-width: 100%; margin-bottom: 2rem; }
+    .hero-actions { flex-direction: column; }
+    .btn-primary, .btn-secondary { width: 100%; justify-content: center; text-align: center; }
+
+    /* Sections */
+    section { padding: 4rem 6vw; }
+
+    .areas-intro { grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 2.5rem; }
+    .areas-grid { grid-template-columns: 1fr 1fr; }
+    .area-card { padding: 1.4rem 1rem; }
+
+    /* Sobre: foto em cima, texto em baixo */
+    .sobre-grid {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+    .sobre-img-wrap {
+      padding: 0 1rem 1rem 0;
+    }
+    .sobre-img-wrap::before {
+      top: 1rem;
+      height: 30%;
+    }
+    .sobre-img-ratio {
+      /* Mantém proporção original da logo horizontal no mobile */
+      padding-bottom: 83.1%;
+    }
+    .sobre-img-ratio img {
+      object-position: center center;
+      padding: 0.4rem;
+    }
+    .sobre-img-caption { font-size: 0.7rem; padding: 0.75rem 1rem; }
+    .sobre-text { padding-top: 2rem; }
+
+    .faq-grid { grid-template-columns: 1fr; }
+    .faq-item { padding: 1.4rem; }
+
+    .abordagem-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .abordagem-pillars { grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .abordagem-quote { padding: 2rem 1.8rem; margin-top: 0; }
+
+    .contato-info { gap: 1.5rem; flex-direction: column; align-items: center; }
+
+    footer { flex-direction: column; text-align: center; gap: 0.3rem; }
+  }
+
+  /* ══════════════════════════════════════
+     RESPONSIVE — MOBILE PEQUENO (≤ 400px)
+  ══════════════════════════════════════ */
+  @media (max-width: 400px) {
+    .hero-image-outer {
+      aspect-ratio: 4 / 5; /* um pouco mais alto em telas muito estreitas */
+    }
+    .areas-grid { grid-template-columns: 1fr; }
+    .abordagem-pillars { grid-template-columns: 1fr; }
+    .nav-cta { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#inicio" class="nav-logo">Alessandro Martins · Psicólogo</a>
+  <ul class="nav-links">
+    <li><a href="#trabalho">Trabalho</a></li>
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#como-funciona">Como Funciona</a></li>
+    <li><a href="#abordagem">Abordagem</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <a href="https://wa.me/5535999999999" target="_blank" class="nav-cta">Falar no WhatsApp</a>
+</nav>
+
+<!-- HERO -->
+<section id="inicio">
+  <div class="hero-text">
+    <p class="hero-eyebrow">Atendimento Online e Presencial · Poços de Caldas/MG</p>
+    <h1 class="hero-title">Psicoterapia para quem deseja <em>compreender a si mesmo</em> e viver com mais autenticidade.</h1>
+    <p class="hero-subtitle">Atendimento psicológico para adolescentes, adultos e idosos. Um espaço seguro de acolhimento, reflexão e desenvolvimento.</p>
+    <div class="hero-actions">
+      <a href="https://wa.me/5535999999999" target="_blank" class="btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+        Falar no WhatsApp
+      </a>
+      <a href="#sobre" class="btn-secondary">Conheça meu trabalho</a>
+    </div>
+  </div>
+  <div class="hero-image-outer">
+    <div class="hero-image-wrap">
+      <img src="./img/fotoperfil.jpeg" alt="Alessandro Martins, Psicólogo">
+      <div class="hero-badge">
+        <p>Psicólogo Clínico</p>
+        <p>CRP 04-73006</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MEU TRABALHO -->
+<section id="trabalho">
+  <div class="areas-intro">
+    <div>
+      <p class="section-eyebrow">Áreas de Atuação</p>
+      <h2 class="section-title">A terapia como espaço de <em>acolhimento e crescimento</em></h2>
+    </div>
+    <div>
+      <div class="divider"></div>
+      <p class="section-intro">A terapia pode ser um espaço de acolhimento, reflexão e desenvolvimento para diferentes momentos da vida. Abaixo, algumas das demandas que acompanho.</p>
+    </div>
+  </div>
+  <div class="areas-grid">
+    <div class="area-card" onclick="openModal('ansiedade')">
+      <div class="area-icon">◇</div>
+      <p class="area-name">Ansiedade</p>
+      <p class="area-desc">Compreendendo gatilhos e desenvolvendo formas mais saudáveis de lidar.</p>
+    </div>
+    <div class="area-card" onclick="openModal('autoestima')">
+      <div class="area-icon">◇</div>
+      <p class="area-name">Autoestima</p>
+      <p class="area-desc">Fortalecendo a autoconfiança e construindo uma relação mais saudável consigo.</p>
+    </div>
+    <div class="area-card" onclick="openModal('relacionamentos')">
+      <div class="area-icon">◇</div>
+      <p class="area-name">Relacionamentos</p>
+      <p class="area-desc">Compreendendo padrões, melhorando a comunicação e fortalecendo vínculos.</p>
+    </div>
+    <div class="area-card" onclick="openModal('dependencia')">
+      <div class="area-icon">◇</div>
+      <p class="area-name">Dependência Emocional</p>
+      <p class="area-desc">Construindo autonomia emocional e segurança interna.</p>
+    </div>
+    <div class="area-card" onclick="openModal('luto')">
+      <div class="area-icon">◇</div>
+      <p class="area-name">Luto</p>
+      <p class="area-desc">Acolhimento para atravessar perdas, respeitando seu tempo e singularidade.</p>
+    </div>
+    <div class="area-card" onclick="openModal('autoconhecimento')">
+      <div class="area-icon">◇</div>
+      <p class="area-name">Autoconhecimento</p>
+      <p class="area-desc">Compreendendo valores, necessidades e desejos para uma vida mais autêntica.</p>
+    </div>
+    <div class="area-card" onclick="openModal('familiar')">
+      <div class="area-icon">◇</div>
+      <p class="area-name">Questões Familiares</p>
+      <p class="area-desc">Navegando conflitos e fortalecendo as relações familiares.</p>
+    </div>
+    <div class="area-card" onclick="openModal('desenvolvimento')">
+      <div class="area-icon">◇</div>
+      <p class="area-name">Desenvolvimento Pessoal</p>
+      <p class="area-desc">Crescendo emocionalmente e desenvolvendo recursos internos.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE MIM -->
+<section id="sobre">
+  <div class="sobre-grid">
+    <div class="sobre-img-wrap">
+      <div class="sobre-img-ratio">
+        <img src="./img/logoimg.JPG" alt="Alessandro Martins, Psicólogo CRP 04-73006">
+      </div>
+      <span class="sobre-img-caption">Alessandro Martins · Psicólogo · CRP 04-73006</span>
+    </div>
+    <div class="sobre-text">
+      <p class="section-eyebrow">Sobre Mim</p>
+      <h2 class="section-title">Caminhar ao lado de <em>quem busca compreender</em> sua história</h2>
+      <div class="divider"></div>
+      <p>Acredito que cada pessoa possui recursos internos para enfrentar seus desafios e construir uma vida mais autêntica. Como psicólogo, meu papel não é oferecer respostas prontas, mas caminhar ao lado de quem busca compreender melhor sua própria história.</p>
+      <div class="formacoes">
+        <div class="formacao-item">
+          <div class="formacao-dot"></div>
+          <div class="formacao-content">
+            <p>Graduação em Psicologia</p>
+            <p>Faculdade Pitágoras — Poços de Caldas/MG</p>
+          </div>
+        </div>
+        <div class="formacao-item">
+          <div class="formacao-dot"></div>
+          <div class="formacao-content">
+            <p>Pós-graduação em Psicoterapia</p>
+            <p>Faculdade Iguaçu — PR</p>
+          </div>
+        </div>
+        <div class="formacao-item">
+          <div class="formacao-dot"></div>
+          <div class="formacao-content">
+            <p>Pós-graduação em Psicologia do Trabalho</p>
+            <p>Faculdade Iguaçu — PR</p>
+          </div>
+        </div>
+        <div class="formacao-item">
+          <div class="formacao-dot"></div>
+          <div class="formacao-content">
+            <p>Pós-graduação em Psicologia de Grupo e Desenvolvimento de Equipes</p>
+            <p>Faculdade Iguaçu — PR</p>
+          </div>
+        </div>
+      </div>
+      <div class="crp-badge">CRP 04-73006 · Conselho Regional de Psicologia</div>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section id="como-funciona">
+  <p class="section-eyebrow">Processo Terapêutico</p>
+  <h2 class="section-title">Como funciona <em>a terapia</em></h2>
+  <p class="section-intro">Cada jornada é única. Conheça como funciona nosso processo de trabalho.</p>
+  <div class="faq-grid">
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">
+        <p class="faq-question">Como é a primeira sessão?</p>
+        <span class="faq-toggle">+</span>
+      </div>
+      <p class="faq-answer">A primeira sessão é um momento de acolhimento e conhecimento mútuo. Você poderá falar sobre sua história, suas dificuldades atuais, expectativas em relação à terapia e os motivos que o levaram a buscar acompanhamento psicológico.</p>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">
+        <p class="faq-question">Qual a duração das sessões?</p>
+        <span class="faq-toggle">+</span>
+      </div>
+      <p class="faq-answer">As sessões possuem duração média de 50 minutos, tempo pensado para garantir um espaço adequado de escuta e trabalho terapêutico.</p>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">
+        <p class="faq-question">Com que frequência acontecem os encontros?</p>
+        <span class="faq-toggle">+</span>
+      </div>
+      <p class="faq-answer">Geralmente os encontros são semanais. Essa frequência favorece a construção do vínculo terapêutico e permite um acompanhamento mais consistente das questões trabalhadas.</p>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">
+        <p class="faq-question">A terapia online funciona?</p>
+        <span class="faq-toggle">+</span>
+      </div>
+      <p class="faq-answer">Sim. Diversos estudos demonstram que a terapia online pode ser tão eficaz quanto a presencial para diferentes demandas psicológicas. Além disso, oferece praticidade e acessibilidade para muitas pessoas.</p>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">
+        <p class="faq-question">Quanto tempo dura o processo terapêutico?</p>
+        <span class="faq-toggle">+</span>
+      </div>
+      <p class="faq-answer">Não existe uma resposta única para essa pergunta. Cada pessoa possui sua própria história, objetivos e necessidades. Algumas demandas podem ser trabalhadas em menos tempo, enquanto outras exigem um acompanhamento mais prolongado. O processo é construído respeitando o ritmo de cada indivíduo.</p>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">
+        <p class="faq-question">Onde acontecem os atendimentos?</p>
+        <span class="faq-toggle">+</span>
+      </div>
+      <p class="faq-answer">Ofereço atendimento presencial em Poços de Caldas/MG e atendimento online para todo o Brasil. As sessões online acontecem por plataformas seguras e confidenciais.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ABORDAGEM -->
+<section id="abordagem">
+  <div class="abordagem-grid">
+    <div class="abordagem-content">
+      <p class="section-eyebrow">Minha Abordagem</p>
+      <h2 class="section-title">Psicologia <em>Humanista</em></h2>
+      <div class="divider"></div>
+      <p class="section-intro" style="margin-bottom:1.5rem;">A Psicologia Humanista parte da compreensão de que cada pessoa é única e possui potencial para crescer, desenvolver-se e encontrar caminhos mais saudáveis para sua vida.</p>
+      <p style="font-size:0.88rem;color:var(--text-mid);line-height:1.9;margin-bottom:1.5rem;">Na terapia, o foco não está apenas nos sintomas ou problemas, mas também na compreensão da experiência vivida pela pessoa. O objetivo é favorecer o autoconhecimento, a autonomia e o desenvolvimento pessoal.</p>
+      <div class="abordagem-pillars">
+        <div class="pillar">
+          <p class="pillar-label">Meu papel</p>
+          <p class="pillar-text">Oferecer acolhimento, empatia e respeito, sem julgamentos.</p>
+        </div>
+        <div class="pillar">
+          <p class="pillar-label">Seu papel</p>
+          <p class="pillar-text">Protagonista da sua própria história e transformação.</p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="abordagem-quote">
+        <p>Acredito que cada pessoa possui recursos internos para enfrentar seus desafios e construir uma vida mais autêntica.</p>
+        <cite>— Alessandro Martins, Psicólogo</cite>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <p class="section-eyebrow">Perguntas Frequentes</p>
+  <h2 class="section-title">Dúvidas <em>comuns</em></h2>
+  <div class="divider"></div>
+  <div class="faq-list">
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">
+        <p class="faq-question">Preciso estar em crise para fazer terapia?</p>
+        <span class="faq-toggle">+</span>
+      </div>
+      <p class="faq-answer">Não. Muitas pessoas procuram terapia para se conhecer melhor, desenvolver habilidades emocionais, melhorar relacionamentos ou promover crescimento pessoal.</p>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">
+        <p class="faq-question">Terapia é só para quem tem transtorno?</p>
+        <span class="faq-toggle">+</span>
+      </div>
+      <p class="faq-answer">Não. A terapia pode beneficiar qualquer pessoa que deseje compreender melhor a si mesma, enfrentar desafios ou desenvolver recursos emocionais.</p>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">
+        <p class="faq-question">Como funciona o sigilo?</p>
+        <span class="faq-toggle">+</span>
+      </div>
+      <p class="faq-answer">Tudo o que é compartilhado durante as sessões é protegido pelo sigilo profissional, conforme previsto pelo Código de Ética do Psicólogo.</p>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">
+        <p class="faq-question">Posso fazer terapia online de qualquer lugar?</p>
+        <span class="faq-toggle">+</span>
+      </div>
+      <p class="faq-answer">Sim. Desde que possua acesso à internet e um ambiente reservado para a sessão.</p>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">
+        <p class="faq-question">Como saber se a terapia está funcionando?</p>
+        <span class="faq-toggle">+</span>
+      </div>
+      <p class="faq-answer">Os resultados costumam aparecer gradualmente. Muitas pessoas percebem mudanças na forma de lidar com emoções, conflitos, relacionamentos e decisões da vida cotidiana.</p>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">
+        <p class="faq-question">O que acontece se eu não souber sobre o que falar?</p>
+        <span class="faq-toggle">+</span>
+      </div>
+      <p class="faq-answer">Isso é mais comum do que parece. O terapeuta pode ajudar a conduzir a conversa e explorar aspectos importantes da sua experiência.</p>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">
+        <p class="faq-question">Posso interromper a terapia quando quiser?</p>
+        <span class="faq-toggle">+</span>
+      </div>
+      <p class="faq-answer">Sim. A terapia é um processo voluntário. Ainda assim, recomenda-se conversar sobre essa decisão para que o encerramento possa ocorrer de forma consciente e saudável.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section id="contato">
+  <p class="section-eyebrow">Contato</p>
+  <h2 class="section-title" style="text-align:center;">Dê o <em>primeiro passo</em></h2>
+  <p class="contato-subtitle">Estou aqui para caminhar ao seu lado. Entre em contato e vamos conversar sobre como posso te ajudar.</p>
+  <div class="contato-cta-wrap">
+    <a href="https://wa.me/5535999999999" target="_blank" class="btn-primary" style="font-size:0.88rem;padding:1rem 2.4rem;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+      Falar comigo no WhatsApp
+    </a>
+    <a href="mailto:alessandrompsi@gmail.com" class="btn-secondary" style="color:var(--sage-pale);border-color:var(--sage-pale);">alessandrompsi@gmail.com</a>
+  </div>
+  <div class="contato-info">
+    <div class="contato-item">
+      <p>Instagram</p>
+      <a href="https://instagram.com/alessandromartinspsi" target="_blank">@alessandromartinspsi</a>
+    </div>
+    <div class="contato-item">
+      <p>Atendimento Presencial</p>
+      <a>Poços de Caldas / MG</a>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Alessandro Martins · Psicólogo CRP 04-73006</p>
+  <p>Poços de Caldas/MG · Atendimento Online e Presencial</p>
+</footer>
+
+<!-- MODALS -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <p class="modal-eyebrow" id="modal-eyebrow"></p>
+    <h3 class="modal-title" id="modal-title"></h3>
+    <p class="modal-body" id="modal-body"></p>
+  </div>
+</div>
+
+<script>
+const areas = {
+  ansiedade: {
+    eyebrow: 'Área de Atuação',
+    title: 'Ansiedade',
+    body: 'Quando os pensamentos parecem não desacelerar, o futuro se torna uma preocupação constante e o presente passa despercebido. A terapia ajuda a compreender os gatilhos da ansiedade e a desenvolver formas mais saudáveis de lidar com ela. Trabalhamos juntos para identificar padrões de pensamento, desenvolver estratégias de regulação emocional e construir uma relação mais equilibrada com a incerteza.'
+  },
+  autoestima: {
+    eyebrow: 'Área de Atuação',
+    title: 'Autoestima',
+    body: 'A forma como nos enxergamos influencia nossas escolhas, relacionamentos e bem-estar. O processo terapêutico pode ajudar a fortalecer a autoconfiança e construir uma relação mais saudável consigo mesmo. Exploramos juntos as crenças que limitam sua visão de si e abrimos espaço para uma percepção mais compassiva e realista.'
+  },
+  relacionamentos: {
+    eyebrow: 'Área de Atuação',
+    title: 'Relacionamentos',
+    body: 'Conflitos amorosos, familiares ou sociais podem gerar sofrimento e insegurança. A terapia oferece um espaço para compreender padrões, melhorar a comunicação e fortalecer vínculos. Trabalhamos a identificação de dinâmicas relacionais que podem estar causando dor e desenvolvemos novas formas de se conectar com as pessoas ao seu redor.'
+  },
+  dependencia: {
+    eyebrow: 'Área de Atuação',
+    title: 'Dependência Emocional',
+    body: 'Quando a felicidade passa a depender exclusivamente da presença, aprovação ou validação do outro, é comum surgirem sentimentos de medo, insegurança e sofrimento. A terapia auxilia na construção da autonomia emocional, ajudando a desenvolver uma base interna de segurança e autoconfiança.'
+  },
+  luto: {
+    eyebrow: 'Área de Atuação',
+    title: 'Luto',
+    body: 'Perdas fazem parte da vida, mas nem sempre é fácil lidar com elas. A terapia oferece acolhimento para atravessar o processo de luto respeitando o tempo e a singularidade de cada pessoa. Seja a perda de um ente querido, um relacionamento, uma fase da vida ou uma identidade, cada processo merece atenção e cuidado.'
+  },
+  autoconhecimento: {
+    eyebrow: 'Área de Atuação',
+    title: 'Autoconhecimento',
+    body: 'Compreender quem somos, nossos valores, necessidades e desejos é um passo importante para uma vida mais autêntica e significativa. A terapia cria um espaço seguro para explorar sua história, seus padrões e suas potencialidades, favorecendo escolhas mais conscientes e alinhadas com quem você realmente é.'
+  },
+  familiar: {
+    eyebrow: 'Área de Atuação',
+    title: 'Questões Familiares',
+    body: 'As relações familiares podem ser fonte de apoio, mas também de conflitos e sofrimento. A terapia oferece um espaço para compreender as dinâmicas familiares, trabalhar os impactos das experiências vividas no contexto da família e desenvolver novas formas de se relacionar com ela.'
+  },
+  desenvolvimento: {
+    eyebrow: 'Área de Atuação',
+    title: 'Desenvolvimento Pessoal',
+    body: 'A terapia não é apenas para momentos de crise. É também um espaço de crescimento, onde você pode desenvolver habilidades emocionais, aprimorar sua comunicação, estabelecer metas com clareza e viver de forma mais plena e intencional.'
+  }
+};
+
+function openModal(key) {
+  const area = areas[key];
+  document.getElementById('modal-eyebrow').textContent = area.eyebrow;
+  document.getElementById('modal-title').textContent = area.title;
+  document.getElementById('modal-body').textContent = area.body;
+  document.getElementById('modal-overlay').classList.add('active');
+}
+
+function closeModal(e) {
+  if (!e || e.target === document.getElementById('modal-overlay')) {
+    document.getElementById('modal-overlay').classList.remove('active');
+  }
+}
+
+function toggleFaq(el) {
+  const isOpen = el.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(item => item.classList.remove('open'));
+  if (!isOpen) el.classList.add('open');
+}
+</script>
+</body>
+</html>
